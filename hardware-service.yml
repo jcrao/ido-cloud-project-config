@@ -1,0 +1,32 @@
+spring:
+  profiles: default
+eureka:
+  instance:
+    # enable to register multiple app instances with a random server port
+    # instance-id: ${spring.application.name}:${random.uuid}
+    #instance:
+    leaseRenewalIntervalInSeconds: 10
+    securePortEnabled: true
+    nonSecurePortEnabled: false
+    securePort: ${server.port}
+    statusPageUrl: https://${eureka.instance.hostName}:${eureka.instance.securePort}/info
+    healthCheckUrl: https://${eureka.instance.hostName}:${eureka.instance.securePort}/health
+    homePageUrl: https://${eureka.instance.hostName}:${eureka.instance.securePort}/
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+      securePort: ${eureka.instance.securePort}
+    
+server:
+  port: 8087
+  
+---
+spring:
+  profiles: docker
+  zipkin:
+    baseUrl: http://tracing-server:9411
+server:
+  port: 8087
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/

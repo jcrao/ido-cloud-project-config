@@ -1,0 +1,40 @@
+zuul:
+  prefix: /api
+  ignoredServices: '*'
+  routes:
+    user-service: /user/**
+    message-service: /message/**
+    app-service: /app/**
+
+server:
+  port: 8090
+  compression:
+    enabled: true
+    mime-types: application/json,text/css,application/javascript
+    min-response-size: 2048
+
+# Internationalization
+spring.messages.basename: messages/messages
+
+---
+spring:
+  profiles: docker
+  zipkin:
+    baseUrl: http://tracing-server:9411
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/
+      
+spring:
+  redis:
+    database:0
+    host:192.168.2.4
+    port:6379
+    password:
+    pool:
+      max-active:8
+      max-wait:-1
+      max-idle:8
+      min-idle:0
+    timeout:2000
