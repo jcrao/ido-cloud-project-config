@@ -6,7 +6,7 @@ zuul:
     dmall-service: /dmall/**
 
 server:
-  port: 9020
+  port: 9040
   compression:
     enabled: true
     mime-types: application/json,text/css,application/javascript
